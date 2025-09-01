@@ -1,5 +1,5 @@
 TARGET = XMENU
-CFLAGS = -O2 -G0 -Wall
+CFLAGS = -Os -G0 -Wall
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 INCDIR = include external/include
