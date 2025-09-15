@@ -1,12 +1,22 @@
+#include <sstream>
+#include <sys/socket.h>
 #include <pspkernel.h>
 #include <psputility.h>
-#include <sstream>
+
 #include "debug.h"
 #include "common.h"
 #include "menu.h"
 
 PSP_MODULE_INFO("XMENU", 0, 1, 0);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
+
+/*
+PSP_DISABLE_NEWLIB();
+PSP_DISABLE_NEWLIB_PIPE_SUPPORT();
+PSP_DISABLE_NEWLIB_SOCKET_SUPPORT();
+PSP_DISABLE_NEWLIB_TIMEZONE_SUPPORT();
+PSP_DISABLE_AUTOSTART_PTHREAD();
+*/
 
 using namespace std;
 
@@ -18,13 +28,10 @@ static volatile bool loading = true;
 
 int startup_thread(int argc, void* argp){
     stringstream startup_runner;
-    
-    for (unsigned i=0; i<startup_txt.length(); i++) {
-        startup_runner << startup_txt[i];    
-    }
 
     while (loading){
         debugScreen(startup_runner.str().c_str(), 180, 130);
+        dots++;
         if(dots>3) {
             startup_runner.str(startup_txt);
             dots=0;
@@ -32,7 +39,6 @@ int startup_thread(int argc, void* argp){
         else {
             startup_runner.str(startup_txt + string(dots, '.'));
         }
-        dots++;
         sceKernelDelayThread(200000);
     }
 
@@ -72,4 +78,13 @@ int main(int argc, char** argv){
     // exit
     sceKernelExitGame();
     return 0;
+}
+
+extern "C"{
+
+extern int module_start(int, void*);
+__attribute__((keep)) void dummy_func(){
+  module_start(0, NULL);
+}
+
 }

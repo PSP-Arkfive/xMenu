@@ -1,3 +1,5 @@
+#include <strings.h>
+
 #include "entry.h"
 #include "common.h"
 

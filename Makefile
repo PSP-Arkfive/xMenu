@@ -1,11 +1,11 @@
 TARGET = XMENU
-CFLAGS = -Os -G0 -Wall
-CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+CFLAGS = -O2 -g0 -Wall -static
+CXXFLAGS = $(CFLAGS) -fno-exceptions
 ASFLAGS = $(CFLAGS)
 INCDIR = include external/include
 LIBDIR = external/libs
-LIBS = -lstdc++ -lpng -lmini2d -lz -lpspgu -lpspgum -lpspsystemctrl_user
-LDFLAGS =
+LIBS = -lmini2d -lpng -lz -lpspgu -lpspgum -lstdc++ -lpspsystemctrl_user
+LDFLAGS = -Tlinkfile.static -Wl,--gc-sections
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = xMenu
 PSP_EBOOT_ICON = resources/ICON0.PNG
