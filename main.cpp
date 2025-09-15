@@ -10,14 +10,6 @@
 PSP_MODULE_INFO("XMENU", 0, 1, 0);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 
-/*
-PSP_DISABLE_NEWLIB();
-PSP_DISABLE_NEWLIB_PIPE_SUPPORT();
-PSP_DISABLE_NEWLIB_SOCKET_SUPPORT();
-PSP_DISABLE_NEWLIB_TIMEZONE_SUPPORT();
-PSP_DISABLE_AUTOSTART_PTHREAD();
-*/
-
 using namespace std;
 
 string startup_txt = "Loading ";
@@ -78,13 +70,4 @@ int main(int argc, char** argv){
     // exit
     sceKernelExitGame();
     return 0;
-}
-
-extern "C"{
-
-extern int module_start(int, void*);
-__attribute__((keep)) void dummy_func(){
-  module_start(0, NULL);
-}
-
 }

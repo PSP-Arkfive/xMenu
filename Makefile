@@ -1,11 +1,14 @@
+PSPSDK=$(shell psp-config --pspsdk-path)
+ARKSDK ?= ../ark-dev-sdk
+
 TARGET = XMENU
 CFLAGS = -O2 -g0 -Wall -static
 CXXFLAGS = $(CFLAGS) -fno-exceptions
 ASFLAGS = $(CFLAGS)
-INCDIR = include external/include
-LIBDIR = external/libs
+INCDIR = include $(ARKSDK)/include
+LIBDIR = $(ARKSDK)/libs
 LIBS = -lmini2d -lpng -lz -lpspgu -lpspgum -lstdc++ -lpspsystemctrl_user
-LDFLAGS = -Tlinkfile.static -Wl,--gc-sections
+LDFLAGS = #-Tlinkfile.static -Wl,--gc-sections
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = xMenu
 PSP_EBOOT_ICON = resources/ICON0.PNG
@@ -24,5 +27,4 @@ OBJS = \
 
 all: $(TARGET).prx
 
-PSPSDK=$(shell psp-config --pspsdk-path)
 include $(PSPSDK)/lib/build.mak
